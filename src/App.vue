@@ -1,5 +1,5 @@
-<template>
-<div class="app2">
+﻿<template>
+<el-card class="box-card"><div class="app2">
     <div class="neirongDiv">
         <el-row>
             <el-col :span="4">
@@ -40,7 +40,7 @@
 
 
     
-</div>
+</div></el-card>
 </template>
 
 <script>

@@ -1,11 +1,11 @@
-<template>
+﻿<template>
 <el-dialog title="" :visible.sync="show" width="80%" :close-on-click-modal="false" @close="close">
     <h4>{{makeAddr(province,city)}}</h4>
 
     <div>
 
         <el-row :gutter="20" v-for="(page,index) in conver(data)" :key="index">
-            <el-col :span="3" v-for="(item,index2) in page" :key="index+'-'+index2">
+            <el-col :span="3" v-for="(item,index2) in page" :key="index+'-'+index2" style="border:1px solid">
                 <div>
                     <i style="font-size:200%" :class="find(item)?'el-icon-location':'el-icon-location-outline'" @click="handle(item)">
                      <div style="font-size:50%" class="icon-name">{{item}}级 </div> 
@@ -137,28 +137,7 @@ export default {
 
         },
         Download: function (lvl) {
-            let _this = this
-            _this.$axio({
-                method: "post",
-                url: "/download",
-                data: {
-                    city: this.cityCode,
-                    province: this.provinceCode,
-                    lvl: lvl,
-                }
-            }).then(res => {
-                if (res.data.status == 200) {
-                    this.$message({
-                        message: '下载成功',
-                        type: 'success'
-                    });
-                } else {
-                    this.$message({
-                        message: '下载失败',
-                        type: 'warning'
-                    });
-                }
-            })
+ 	document.location.href = this.$axios.defaults.baseURL + "/download?city=" + this.cityCode + "&province=" + this.provinceCode + "&lvl=" + lvl;
         }
     }
 }
