@@ -1,25 +1,42 @@
 ﻿<template>
-<el-card class="box-card">
+
     <div class="app2">
+ 
+        <el-card class="box-card">
+              <el-select filterable placeholder="请选择城市、可输入搜索" @change="selectCity">
+                <el-option
+                v-for="(item,index) in cityData"
+                :key="index"
+                :label="item.cn"
+                :value="index">
+                </el-option>
+            </el-select>
+        </el-card>
+
+     
+
+      
+
+    <el-card class="box-card2">
     <div class="neirongDiv">
         <el-row>
             <el-col :span="4">
-                <el-button type="text" @click="open('bj','北京','北京','bj','115.423865472203','41.0605660778796','117.506710421416','39.4395979544499')">北京</el-button>
+                <el-button type="text" @click="open('北京','bj','北京','bj','115.423865472203','41.0605660778796','117.506710421416','39.4395979544499')">北京</el-button>
             </el-col>
             <el-col :span="4">
-                <el-button type="text" @click="open('sh','上海','上海','sh','120.304568213546','32.0546789546825','122.857496231542','31.2456789954123')">上海</el-button>
+                <el-button type="text" @click="open('上海','sh','上海','sh','120.304568213546','32.0546789546825','122.857496231542','31.2456789954123')">上海</el-button>
             </el-col>
             <el-col :span="4">
-                <el-button type="text" @click="open('tj','天津','天津','tj','116.707588891152','40.2532470235051','118.068229036184','38.555476114664')">天津</el-button>
+                <el-button type="text" @click="open('天津','tj','天津','tj','116.707588891152','40.2532470235051','118.068229036184','38.555476114664')">天津</el-button>
             </el-col>
             <el-col :span="4">
-                <el-button type="text" @click="open('cq','重庆','重庆','cq','105.289859281008','32.2012000693598','110.200401018488','28.1603265660493')">重庆</el-button>
+                <el-button type="text" @click="open('重庆','cq','重庆','cq','105.289859281008','32.2012000693598','110.200401018488','28.1603265660493')">重庆</el-button>
             </el-col>
             <el-col :span="4">
-                <el-button type="text" @click="open('xg','香港','香港','xg','113.822093774413','22.5652064630213','114.504439939613','22.1337720570533')">香港</el-button>
+                <el-button type="text" @click="open('香港','xg','香港','xg','113.822093774413','22.5652064630213','114.504439939613','22.1337720570533')">香港</el-button>
             </el-col>
             <el-col :span="4">
-                <el-button type="text" @click="open('am','澳门','澳门','am','113.53280294788','22.2143255377089','113.609881638345','22.1023010499504')">澳门</el-button>
+                <el-button type="text" @click="open('澳门','am','澳门','am','113.53280294788','22.2143255377089','113.609881638345','22.1023010499504')">澳门</el-button>
             </el-col>
         </el-row>
 
@@ -34,7 +51,7 @@
             </el-collapse-item>
         </el-collapse>
     </div>
-
+    </el-card>
     <showDialog v-if="dialogShow" :show="dialogShow" @after-close="afterclose"
     :province="province" :provinceCode="provinceCode"
     :city="city" :cityCode="cityCode" :maxLat="maxLat" :maxLnt="maxLnt" :minLat="minLat" :minLnt="minLnt" />
@@ -52,13 +69,16 @@ export default {
     name: "app",
     data() {
         return {
+            cityData:[],
+            searchKey:"",
+            select:"1",
             dialogShow: false,
             activeNames: [],
             province:"",
             city:"",
             provinceCode:"",
             cityCode:"",
-
+            dataView:[],
             data: [{
                     sf: "安徽",
                     sfCode:"ah",
@@ -204,13 +224,39 @@ export default {
     components: {
         showDialog
     },
+
     created:function(){
       for(var i=0;i<this.data.length;i++){
           this.activeNames.push(i);
       }
+      this.cityData.push({cn:"北京",en:"bj"});
+      this.cityData.push({cn:"上海",en:"sh"});
+      this.cityData.push({cn:"天津",en:"tj"});
+      this.cityData.push({cn:"重庆",en:"cq"});
+      this.cityData.push({cn:"香港",en:"xg"});
+      this.cityData.push({cn:"澳门",en:"am"});
+
+
+      for(var i=0;i<this.data.length;i++){
+          for(var j=0;j<this.data[i].shi.length;j++){ 
+              this.data[i].shi[j].parent=this.data[i];
+              this.cityData.push(this.data[i].shi[j]);
+          }
+      }
     },
+
     methods: {
-        
+        selectCity(index){           
+           var item=this.cityData[index];
+           if(index<=5){
+               this.open(item.cn,item.en,item.cn,item.en,"","","","");
+           }
+           else{
+              this.open(item.parent.sf,item.parent.sfCode,item.cn,item.en,"","","","");
+           }
+           
+
+        },
         open: function (sf,sfCode,cn,en,shimaxLat,shimaxLnt,shiminLat,shiminLnt) {
             this.dialogShow = true;
             this.province=sf;
@@ -251,19 +297,31 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
     .neirongDiv{
-        width: 80%;
-        box-shadow: 5px 5px 5px #888888;
-        border:1px solid #888888;
+        width: 100%;
+       
     }
-    .app2{
-         
+
+    .el-card{
+        width:80%;
+        margin-top:20px;
         
+    }
+
+    .box-card2{
+        width:80%;
+        margin-top:20px;
+        margin-bottom:100px;
+    }
+
+
+    .app2{ 
         width: 100%;  
-        ;display:flex;flex-direction: column;align-items:center;
-        padding-top:50px;
-        
-        
+        display:flex;flex-direction: column;align-items:center; 
+        padding:0px;
     }
+ 
+
+   
 </style>
