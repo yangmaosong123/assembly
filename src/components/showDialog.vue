@@ -112,10 +112,12 @@ export default {
             if (res.data.status == 200) {
                 _this.sz = res.data.data
             }
-        });
-        if (_this.find(18) == true) {
-            this.showLngLat=false;  //隐藏经纬度输入框
+             if (_this.find(18) == true) {
+                 this.showLngLat=false;  //隐藏经纬度输入框
           }
+            
+        });
+        
     },
     methods: {
         makeAddr(province, city,provinceCode) {
