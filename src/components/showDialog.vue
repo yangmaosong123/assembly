@@ -1,7 +1,7 @@
 ﻿<template>
 <el-dialog title="" :visible.sync="show" width="50%" :close-on-click-modal="false" @close="close">
     
-    <h4>{{makeAddr(province,city)}}</h4>
+    <h4>{{makeAddr(province,city,provinceCode)}}</h4>
     <el-card class="box-card" v-show="showLngLat">
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm" >
             <el-row>
@@ -113,13 +113,13 @@ export default {
                 _this.sz = res.data.data
             }
         });
-        if (_this.find(lvl) == true) {
+        if (_this.find(18) == true) {
             this.showLngLat=false;  //隐藏经纬度输入框
           }
     },
     methods: {
-        makeAddr(province, city) {
-            if (province == "北京" || province == "上海" || province == "天津" || province == "重庆" || province == "香港" || province == "澳门") {
+        makeAddr(province, city,provinceCode) {
+            if (provinceCode == "bj" || provinceCode == "sh" || provinceCode == "tj" || provinceCode == "cq" || provinceCode == "xg" || provinceCode == "am") {
                 return city;
             } else {
                 return province + '/' + city
