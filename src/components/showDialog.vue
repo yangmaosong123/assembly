@@ -2,8 +2,8 @@
 <el-dialog title="" :visible.sync="show" width="50%" :close-on-click-modal="false" @close="close">
     
     <h4>{{makeAddr(province,city)}}</h4>
-    <el-card class="box-card">
-        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm" v-show="showLngLat">
+    <el-card class="box-card" v-show="showLngLat">
+        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm" >
             <el-row>
                 <el-col :span="12">
                     <el-form-item label="左上角经度" prop="minLng">
