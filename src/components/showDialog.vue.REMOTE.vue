@@ -3,7 +3,7 @@
     
     <h4>{{makeAddr(province,city)}}</h4>
     <el-card class="box-card">
-        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm" v-show="showLngLat">
+        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
             <el-row>
                 <el-col :span="12">
                     <el-form-item label="左上角经度" prop="minLng">
@@ -32,7 +32,7 @@
                 <a href="http://api.map.baidu.com/lbsapi/getpoint/index.html" target="_blank">获取经纬度范围</a>
             </el-row>
         </el-form>
-    </el-card >
+    </el-card class="box-card">
     <br>
     <div>
         <el-row :gutter="20" v-for="(page,index) in conver(data)" :key="index">
@@ -56,7 +56,6 @@ export default {
         return {
             sz: [],
             data: [],
-            showLngLat:true,   //是否显示经纬度输入框
             ruleForm: {
                 minLat: "", //左上角经度
                 minLng: "", //右下角经度
@@ -112,10 +111,7 @@ export default {
             if (res.data.status == 200) {
                 _this.sz = res.data.data
             }
-        });
-        if (_this.find(lvl) == true) {
-            this.showLngLat=false;  //隐藏经纬度输入框
-          }
+        })
     },
     methods: {
         makeAddr(province, city) {
