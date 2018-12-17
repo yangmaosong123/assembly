@@ -41,7 +41,7 @@ Vue.use(ElementUI);
 import axios from 'axios'
 
 //axios.defaults.baseURL = 'http://230/wf';
-axios.defaults.baseURL = 'http://localhost:9098/offlineMap';
+axios.defaults.baseURL = 'http://192.168.1.103:8080/wf';
 
 // axios.defaults.baseURL = 'http://192.168.5.192:8080/wf';
 // axios.defaults.baseURL = 'http://192.168.5.180/wf'
